@@ -17,10 +17,11 @@
         <div class="container mx-auto flex justify-between items-center">
             <div class="text-2xl font-bold">Cosmetic Store</div>
             <ul class="flex space-x-4">
-                <li><a href="#home" class="hover:underline">Home</a></li>
-                <li><a href="#products"class="hover:underline">Products</a></li>
-                <li><a href="#about"class="hover:underline">About</a></li>
-                <li><a href="#contact"class="hover:underline">Contact</a></li>
+                <li><a href="{{ route('home') }}" class="hover:underline">Home</a></li>
+                <li><a href="{{route('products')}}"class="hover:underline">Products</a></li>
+                <li><a href="{{route('about')}}"class="hover:underline">About</a></li>
+                <li><a href="{{route('contacts')}}"class="hover:underline">Contact</a></li>
+                <li><a href="{{route('loginuser')}}"class="hover:underline">Login</a></li>
             </ul>
         </div>
 

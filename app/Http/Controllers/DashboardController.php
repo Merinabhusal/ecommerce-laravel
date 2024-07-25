@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\categories;
+use App\Models\Contact;
 use App\Models\FeaturedItem;
 use App\Models\Product;
 use App\Models\Testimonial;
@@ -20,13 +21,14 @@ public function dashboard()
 $totalproducts=Product::count();
 $totalfeatureditem=FeaturedItem::count();
 $totaltestimonials=Testimonial::count();
-$categories=categories::all();
+$totalcategories=categories::all();
+$totalcontacts=Contact::all();
 $date=Carbon::today()->subDays(30);
-return view('dashboard',compact('totalproducts','totalfeatureditem','totaltestimonials' ,'totalcategories','date'));
+return view('dashboard',compact('totalproducts','totalfeatureditem','totaltestimonials' ,'totalcategories','totalcontacts','date'));
 
 }
 
 
 
-
+}
 

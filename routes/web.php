@@ -3,10 +3,12 @@
 use App\Http\Controllers\categoriesController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FeaturedItemController;
+use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestimonialController;
 use App\Models\categories;
+use App\Models\Contact;
 use App\Models\FeaturedItem;
 use App\Models\Product;
 use App\Models\Testimonial;
@@ -25,26 +27,48 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $products=Product::all();
-$featureditems=FeaturedItem::all();
+    $featureditems=FeaturedItem::all();
     $testimonials=Testimonial::all();
-$categories=categories::all();
-    return view('welcome', compact('products','featureditems','testimonials','categories'));
+    $categories=categories::all();
+     $contacts=Contact::all();
+ return view('welcome', compact('products','featureditems','testimonials','categories','contacts'));
+})->name('home');
 
 
-});
+
+
+
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
+
+
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
 
-   Route::get('/product',[ProductController::class,'index'])->name('products.index');
-    Route::get('/product/create', [ProductController::class,'create'])->name('products.create');
-    Route::post('/product/store',[ProductController::class,'store'])->name('products.store');
-    Route::get('/product/{id}/edit', [ProductController::class,'edit'])->name('products.edit');
-    Route::post('/product/{id}/update', [ProductController::class,'update'])->name('products.update');
-    Route::post('/product/destroy', [ProductController::class,'destroy'])->name('products.destroy');
+
+
+ Route::get('/products',[PagesController::class,'index'])->name('products');
+ Route::get('/about',[PagesController::class,'about'])->name('about');
+ Route::get('/contacts',[PagesController::class,'contact'])->name('contacts');
+Route::post('/loginuser',[PagesController::class,'loginuser'])->name('loginuser');
+Route::post('/registeruser',[PagesController::class,'registeruser'])->name('registeruser');
+
+
+
+
+
+
+
+ Route::get('/product',[ProductController::class,'index'])->name('products.index');
+ Route::get('/product/create', [ProductController::class,'create'])->name('products.create');
+ Route::post('/product/store',[ProductController::class,'store'])->name('products.store');
+ Route::get('/product/{id}/edit', [ProductController::class,'edit'])->name('products.edit');
+ Route::post('/product/{id}/update', [ProductController::class,'update'])->name('products.update');
+ Route::post('/product/destroy', [ProductController::class,'destroy'])->name('products.destroy');
 
 
 Route::get('/featureditem',[FeaturedItemController::class,'index'])->name('featureditem.index');
@@ -71,10 +95,10 @@ Route::get('/testimonial',[TestimonialController::class,'index'])->name('testimo
     Route::post('/category/destroy', [categoriesController::class,'destroy'])->name('category.destroy');
 
 
-    Route::get('/contact', 'ContactUsController@showForm')->name('contact.form');
-    Route::post('/contact', 'ContactUsController@sendContactInfo')->name('contact.send');
 
-
+    Route::get('/contact',[ContactController::class,'index'])->name('contact.index');
+    Route::post('/contact/store', [ContactController::class,'store'])->name('contact.store');
+    Route::post('/contact/destroy', [ContactController::class,'destroy'])->name('contact.destroy');
 
 
 
