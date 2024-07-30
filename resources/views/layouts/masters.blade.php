@@ -21,7 +21,7 @@
                 <li><a href="{{route('products')}}"class="hover:underline">Products</a></li>
                 <li><a href="{{route('about')}}"class="hover:underline">About</a></li>
                 <li><a href="{{route('contacts')}}"class="hover:underline">Contact</a></li>
-                <li><a href="{{route('loginuser')}}"class="hover:underline">Login</a></li>
+                <li><a href=""class="hover:underline">Login</a></li>
             </ul>
         </div>
 

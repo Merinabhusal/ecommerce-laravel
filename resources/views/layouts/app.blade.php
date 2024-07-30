@@ -39,7 +39,6 @@
                 <a href="{{route('products.index')}}"class="p-2 block hover:bg-red-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-product-hunt-fill"></i>Products</a>
                 <a href="{{route('featureditem.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-product-hunt-fill"></i>Featured Items</a>
                 <a href="{{route('testimonials.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-feedback-line"></i>Testimonials</a>
-                <a href=""class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-blogger-line"></i></i>Brands</a>
                 <a href="{{route('category.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-book-shelf-line"></i>Shop By Category</a>
                 <a href="{{route('contact.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-contacts-book-line"></i>Contact</a>
                   <form action="{{route('logout')}}" method="POST">

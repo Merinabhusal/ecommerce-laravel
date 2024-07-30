@@ -25,16 +25,16 @@ return view('about');
  public function contact (){
 
     return view('contact');
-
 }
 
-public function loginuser(){
-
-return view('loginuser');
+public function show($product)
+{
+  $product = Product::findOrFail($product);
+ return view('products.show', compact('product'));
 }
 
-public function registeruser(){
 
-return view('registeruser');
-}
+
+
+
 }

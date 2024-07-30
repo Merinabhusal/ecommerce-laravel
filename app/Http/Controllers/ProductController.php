@@ -22,6 +22,7 @@ class ProductController extends Controller
         $data = $request->validate([
             'priority'=>'required',
             'name'=>'required',
+             'description'=>'required',
             'photopath' => 'required',
             'price'=>'required',
         ]);
@@ -54,6 +55,7 @@ class ProductController extends Controller
         $data = $request->validate([
            'priority'=>'required',
             'name'=>'required',
+            'description'=>'required',
             'photopath' => 'required',
             'price'=>'required',
 
@@ -83,6 +85,8 @@ class ProductController extends Controller
           $products->delete();
           return redirect (route('products.index'));
       }
+
+
 
 
 

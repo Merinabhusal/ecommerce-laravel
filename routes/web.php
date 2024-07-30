@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\categoriesController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FeaturedItemController;
@@ -54,11 +56,7 @@ Route::middleware('auth')->group(function () {
  Route::get('/products',[PagesController::class,'index'])->name('products');
  Route::get('/about',[PagesController::class,'about'])->name('about');
  Route::get('/contacts',[PagesController::class,'contact'])->name('contacts');
-Route::post('/loginuser',[PagesController::class,'loginuser'])->name('loginuser');
-Route::post('/registeruser',[PagesController::class,'registeruser'])->name('registeruser');
-
-
-
+Route::get('products/{product}',[PagesController::class,'show'])->name('products.show');
 
 
 
@@ -69,6 +67,9 @@ Route::post('/registeruser',[PagesController::class,'registeruser'])->name('regi
  Route::get('/product/{id}/edit', [ProductController::class,'edit'])->name('products.edit');
  Route::post('/product/{id}/update', [ProductController::class,'update'])->name('products.update');
  Route::post('/product/destroy', [ProductController::class,'destroy'])->name('products.destroy');
+
+
+
 
 
 Route::get('/featureditem',[FeaturedItemController::class,'index'])->name('featureditem.index');

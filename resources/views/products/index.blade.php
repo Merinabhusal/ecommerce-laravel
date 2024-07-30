@@ -1,5 +1,5 @@
-<!-- resources/views/products/index.blade.php -->
-@extends('layouts.app')
+{{-- resources/views/products/index.blade.php --}}
+ @extends('layouts.app')
 @section('heading')
 Products
 @endsection
@@ -16,6 +16,7 @@ Products
            <th>Priority</th>
             <th>Name</th>
            <th>Price</th>
+           <th>Description</th>
            <th>Photopath</th>
             <th>Actions</th>
         </tr>
@@ -25,6 +26,7 @@ Products
                     <td>{{$product->priority}}</td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->price }}</td>
+                    <td>{{ $product->description }}</td>
                     <td><img class="h-32" src="{{asset('images/products/'.$product->photopath)}}" alt=""></td>
 
                     <td>
@@ -74,3 +76,10 @@ Products
 
 
 @endsection
+
+
+
+
+
+
+

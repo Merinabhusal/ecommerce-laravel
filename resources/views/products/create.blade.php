@@ -22,6 +22,13 @@ Create Product
             <p class="text-red-500 text-xs mt-0">{{$message}}</p>
         @enderror
 
+        <input type="text" name="description" placeholder="Enter Description" class="w-full rounded-lg">
+        @error('description')
+            <p class="text-red-500 text-xs mt-0">{{$message}}</p>
+        @enderror
+
+
+
         <input type="integer" name="price"placeholder="Enter Price" class="w-full rounded-lg mt-4 p-2 border border-gray-500" >
         @error('price')
             <p class="text-red-500 text-xs mt-0">{{$message}}</p>
@@ -34,7 +41,6 @@ Create Product
         </div>
     </form>
 </div>
-
 </form>
 </div>
 

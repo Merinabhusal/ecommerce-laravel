@@ -1,20 +1,20 @@
 @extends('layouts.masters')
 @section('content')
-
- {{-- Products --}}
-<div class="text-center mt-10">
-    <h1 class="text-4xl text-black mt-2 font-bold">Our Products</h1>
-     <div class=" grid-grid-cols-1 md:grid grid-cols-5 gap-8">
-     @foreach ($products as $product)
-        <div class="rounded-lg shadow border justify-center">
-            <img src="{{asset('images/products/'.$product->photopath)}}" alt="" class="w-full h-48 object-cover rounded-t-lg w-1/3 transform transition duration-500 hover:scale-110">
-            <p class="text-black text-bold text-xl">{{ $product->name }}</p>
-            <p class="text-pink-800 ">{{ $product->price }}</p>
-
-         </div>
- @endforeach
-     </div>
-   </div>
+{{-- Products --}}
+ <div class="container mx-auto">
+    <h1 class="text-3xl font-bold mb-6">Products</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        @foreach($products as $product)
+            <div class="bg-white p-4 rounded-lg shadow">
+                <img src="{{ $product->photopath }}" alt="{{ $product->name }}" class="w-full h-48 object-cover mb-4">
+                <h2 class="text-xl font-semibold">{{ $product->name }}</h2>
+                <p class="text-gray-700">{{ $product->description }}</p>
+                <p class="text-gray-900 font-bold">${{ $product->price }}</p>
+                <a href="{{ route('products.show', $product->id) }}">View Product</a>
+            </div>
+        @endforeach
+    </div>
+</div>
 
 @endsection
 

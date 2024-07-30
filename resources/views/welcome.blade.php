@@ -5,24 +5,26 @@
         <div class="text-center">
             <h1 class="text-4xl md:text-6xl font-bold mb-4">Welcome to Cosmetic Store</h1>
             <p class="text-lg md:text-2xl mb-6">Your one-stop shop for all beauty products</p>
-            <a href="{{route('products')}}" class="text-black bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2  hover:opacity-70">Shop Now</a>
+            <a href="{{route('products')}}"class="text-black bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2  hover:opacity-70">Shop Now</a>
         </div>
     </section>
 
 {{-- Products --}}
- <div class="text-center mt-10">
-    <h1 class="text-4xl text-black mt-2 font-bold">Our Products</h1>
-     <div class=" grid-grid-cols-1 md:grid grid-cols-5 gap-8">
-     @foreach ($products as $product )
-        <div class="rounded-lg shadow border justify-center ">
-            <img src="{{asset('images/products/'.$product->photopath)}}" alt="" class="w-full h-48 object-cover rounded-t-lg w-1/3 transform transition duration-500 hover:scale-110">
-            <p class="text-black text-bold text-xl">{{ $product->name }}</p>
-            <p class="text-pink-800 ">{{ $product->price }}</p>
+<div class="container mx-auto">
+    <h1 class="text-3xl font-bold mb-6">Products</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        @foreach($products as $product)
+            <div class="bg-white rounded-lg shadow">
+                <img class="h-48  object-cover " src="{{asset('images/products/'.$product->photopath)}}" alt="">
+                <h2 class="text-xl font-semibold">{{ $product->name }}</h2>
+                <p class="text-gray-700">{{ $product->description }}</p>
+                <p class="text-gray-900 font-bold">${{ $product->price }}</p>
+                <a href="{{route('products.show',$product->id)}}">View Product</a>
+            </div>
+        @endforeach
+    </div>
+</div>
 
-         </div>
- @endforeach
-     </div>
-   </div>
 
 
  <section>
@@ -90,40 +92,7 @@
     </div>
 </section>
 
-<!-- Brands Section -->
-<section id="brands" class="py-12 bg-gray-100">
-    <div class="container mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-8">Our Brands</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <!-- Swiper -->
-            <div class="swiper swiper1 mx-40">
-                <div class="swiper-wrapper mb-8">
-                        <div class="swiper-slide">
-                         <img class="" src="https://www.lux-review.com/wp-content/uploads/2021/07/Dior-Make-up.jpg" alt="">
-                     </div>
 
-                     <div class="swiper-slide">
-                        <img class="" src="https://www.lux-review.com/wp-content/uploads/2021/07/Dior-Make-up.jpg" alt="">
-                    </div>
-
-
-                    <div class="swiper-slide">
-                        <img class="" src="https://www.lux-review.com/wp-content/uploads/2021/07/Dior-Make-up.jpg" alt="">
-                    </div>
-
-                    <div class="swiper-slide">
-                        <img class="" src="https://www.lux-review.com/wp-content/uploads/2021/07/Dior-Make-up.jpg" alt="">
-                    </div>
-
-
-
-                  </div>
-                <div class="swiper-pagination "></div>
-            </div>
-  </div>
-  </div>
-</section>
-</section>
 
 <!-- Categories Section -->
 <section id="categories" class="py-12 bg-white">
