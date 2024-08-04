@@ -11,8 +11,7 @@ Testimonials
 <table id="myTable" class="display">
     <thead>
         <tr>
-
-           <th>Priority</th>
+            <th>Priority</th>
             <th>Name</th>
             <th>Photopath</th>
             <th>Description</th>

@@ -19,7 +19,13 @@
                 <h2 class="text-xl font-semibold">{{ $product->name }}</h2>
                 <p class="text-gray-700">{{ $product->description }}</p>
                 <p class="text-gray-900 font-bold">${{ $product->price }}</p>
-                <a href="{{route('products.show',$product->id)}}">View Product</a>
+               <form action="{{ route('cart.add', $product) }}" method="POST">
+
+                    @csrf
+
+                    <button type="submit">Add to Cart</button>
+
+                </form>
             </div>
         @endforeach
     </div>
@@ -77,11 +83,11 @@
         <h2 class="text-3xl font-bold mb-8">What Our Customers Say</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
            @foreach ($testimonials as $testimonial)
-            <div class="bg-pink-100 p-6 rounded-lg shadow-lg">
+            <div class="bg-pink-100 p-4 rounded-lg">
                <div class="flex justify-center mb-4">
-            <img src="{{asset('images/testimonials/'.$testimonial->photopath)}}" alt="" class=" h-24 object-cover rounded-full border-4 border-white w-1/3 ">
+            <img src="{{asset('images/testimonials/'.$testimonial->photopath)}}" alt="" class=" h-32 object-cover rounded-full w-1/4 ">
 </div>
-            <h3 class="text-xl font-bold">{{ $testimonial->name }}</h3>git pull origin main
+            <h3 class="text-xl font-bold">{{ $testimonial->name }}</h3>
 
             <p class="mt-2 text-gray-700">{{ $testimonial->description }}</p>
         </div>

@@ -27,11 +27,10 @@ return view('about');
     return view('contact');
 }
 
-public function show($product)
-{
-  $product = Product::findOrFail($product);
- return view('products.show', compact('product'));
-}
+
+
+
+
 
 
 

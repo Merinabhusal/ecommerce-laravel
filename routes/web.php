@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\categoriesController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FeaturedItemController;
@@ -38,11 +40,6 @@ Route::get('/', function () {
 
 
 
-
-
-
-
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 
@@ -56,9 +53,17 @@ Route::middleware('auth')->group(function () {
  Route::get('/products',[PagesController::class,'index'])->name('products');
  Route::get('/about',[PagesController::class,'about'])->name('about');
  Route::get('/contacts',[PagesController::class,'contact'])->name('contacts');
-Route::get('products/{product}',[PagesController::class,'show'])->name('products.show');
 
 
+
+
+//  Route::get('/login', [RegisteredUserController::class, 'showLoginForm'])->name('login');
+//  Route::post('/login', [RegisteredUserController::class, 'login']);
+//  Route::post('/logout', [RegisteredUserController::class, 'logout'])->name('logout');
+
+
+//  Route::get('/register', [RegisteredUserController::class, 'showRegistrationForm'])->name('register');
+//  Route::post('/register', [RegisteredUserController::class, 'register']);
 
 
  Route::get('/product',[ProductController::class,'index'])->name('products.index');
@@ -67,6 +72,14 @@ Route::get('products/{product}',[PagesController::class,'show'])->name('products
  Route::get('/product/{id}/edit', [ProductController::class,'edit'])->name('products.edit');
  Route::post('/product/{id}/update', [ProductController::class,'update'])->name('products.update');
  Route::post('/product/destroy', [ProductController::class,'destroy'])->name('products.destroy');
+ Route::get('/products/{id}',[ProductController::class,'show'])->name('products.show');
+
+ Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+ Route::post('cart/{product}', [CartController::class, 'add'])->name('cart.add');
+ Route::delete('cart/{product}', [CartController::class, 'remove'])->name('cart.remove');
+
+ Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
+
 
 
 
@@ -103,10 +116,10 @@ Route::get('/testimonial',[TestimonialController::class,'index'])->name('testimo
 
 
 
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__.'/auth.php';
