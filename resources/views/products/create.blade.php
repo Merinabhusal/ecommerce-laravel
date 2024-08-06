@@ -12,8 +12,8 @@ Create Product
             <p class="text-red-500 text-xs mt-0">{{$message}}</p>
         @enderror
 
-        <input type="text" name="name" placeholder="Enter Name" class="w-full rounded-lg">
-        @error('name')
+        <input type="text" name="product_name" placeholder="Enter Name" class="w-full rounded-lg">
+        @error('product_name')
             <p class="text-red-500 text-xs mt-0">{{$message}}</p>
         @enderror
 

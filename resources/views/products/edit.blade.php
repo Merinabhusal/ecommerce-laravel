@@ -11,8 +11,8 @@ Edit Products
         <p class="text-red-500 text-xs mt-0">{{$message}}</p>
     @enderror
 
-    <input type="text" name="name" placeholder="Enter Name" class="w-full rounded-lg"value="{{$products->name}}">
-    @error('name')
+    <input type="text" name="product_name" placeholder="Enter Name" class="w-full rounded-lg"value="{{$products->product_name}}">
+    @error('product_name')
         <p class="text-red-500 text-xs mt-0">{{$message}}</p>
     @enderror
 

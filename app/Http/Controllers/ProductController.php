@@ -21,7 +21,7 @@ class ProductController extends Controller
     {
         $data = $request->validate([
             'priority'=>'required',
-            'name'=>'required',
+            'product_name'=>'required',
              'description'=>'required',
             'photopath' => 'required',
             'price'=>'required',
@@ -54,7 +54,7 @@ class ProductController extends Controller
         $products=Product::find($id);
         $data = $request->validate([
            'priority'=>'required',
-            'name'=>'required',
+            'product_name'=>'required',
             'description'=>'required',
             'photopath' => 'required',
             'price'=>'required',

@@ -14,7 +14,7 @@ Products
         <tr>
 
            <th>Priority</th>
-            <th>Name</th>
+            <th>Product_Name</th>
            <th>Price</th>
            <th>Description</th>
            <th>Photopath</th>
@@ -24,7 +24,7 @@ Products
             @foreach ($products as $product)
                 <tr>
                     <td>{{$product->priority}}</td>
-                    <td>{{ $product->name }}</td>
+                    <td>{{ $product->product_name }}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->description }}</td>
                     <td><img class="h-32" src="{{asset('images/products/'.$product->photopath)}}" alt=""></td>

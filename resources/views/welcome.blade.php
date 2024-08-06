@@ -12,18 +12,22 @@
 {{-- Products --}}
 <div class="container mx-auto">
     <h1 class="text-3xl font-bold mb-6">Products</h1>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid-cols-4 gap-6 flex px-6 py-2">
         @foreach($products as $product)
-            <div class="bg-white rounded-lg shadow">
-                <img class="h-48  object-cover " src="{{asset('images/products/'.$product->photopath)}}" alt="">
-                <h2 class="text-xl font-semibold">{{ $product->name }}</h2>
-                <p class="text-gray-700">{{ $product->description }}</p>
-                <p class="text-gray-900 font-bold">${{ $product->price }}</p>
-               <form action="{{ route('cart.add', $product) }}" method="POST">
+            <div class="bg-white rounded-lg shadow border text-center">
+                <img class="h-48 object-cover" src="{{asset('images/products/'.$product->photopath)}}" alt="">
+                <h2 class="text-xl font-semibold ">{{ $product->product_name }}</h2>
+                <p class="text-gray-900 font-bold ">Rs{{ $product->price }}</p>
+                {{-- <p class="text-gray-700">{{ $product->description }}</p> --}}
+
+                <form action="{{ route('addcart', ['id' => $product->id]) }}" method="POST">
 
                     @csrf
+            <input type="number"value="1" min="1"class="form-control"style="width:100px" name="quantity">
 
-                    <button type="submit">Add to Cart</button>
+<br>
+
+<input class="btn btn-primary bg-black text-white px-4 py-2"type="submit" value="Add Cart">
 
                 </form>
             </div>

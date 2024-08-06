@@ -7,6 +7,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\categoriesController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FeaturedItemController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -55,6 +56,8 @@ Route::middleware('auth')->group(function () {
  Route::get('/contacts',[PagesController::class,'contact'])->name('contacts');
 
 
+Route::get('/userlogin',[PagesController::class,'userlogin'])->name('userlogin');
+ Route::post('/userregister',[PagesController::class,'userregister'])->name('userregister');
 
 
 //  Route::get('/login', [RegisteredUserController::class, 'showLoginForm'])->name('login');
@@ -74,11 +77,23 @@ Route::middleware('auth')->group(function () {
  Route::post('/product/destroy', [ProductController::class,'destroy'])->name('products.destroy');
  Route::get('/products/{id}',[ProductController::class,'show'])->name('products.show');
 
- Route::get('cart', [CartController::class, 'index'])->name('cart.index');
- Route::post('cart/{product}', [CartController::class, 'add'])->name('cart.add');
- Route::delete('cart/{product}', [CartController::class, 'remove'])->name('cart.remove');
+//  Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+//  Route::post('cart/{product}', [CartController::class, 'add'])->name('cart.add');
+//  Route::delete('cart/{product}', [CartController::class, 'remove'])->name('cart.remove');
 
- Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
+//  Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
+
+
+
+
+Route::post('/addcart/{id}', [PagesController::class, 'addcart'])->name('addcart');
+
+
+
+
+
+
+
 
 
 
