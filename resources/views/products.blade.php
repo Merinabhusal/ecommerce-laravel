@@ -11,7 +11,9 @@
                 <p class="text-gray-900 font-bold ">Rs{{ $product->price }}</p>
                 {{-- <p class="text-gray-700">{{ $product->description }}</p> --}}
 
-                <form action="{{ url('addcart/' .$product->id) }}" method="POST">
+
+                <form action="{{route('cart.index')}}" method="POST">
+
 
                     @csrf
             <input type="number"value="1" min="1"class="form-control"style="width:100px" name="quantity">

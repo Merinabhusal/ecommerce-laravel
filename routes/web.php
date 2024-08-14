@@ -41,6 +41,10 @@ Route::get('/', function () {
 
 
 
+Route::get('/userlogin',[PagesController::class,'userlogin'])->name('userlogin');
+Route::get('/userregister',[PagesController::class,'userregister'])->name('user.register');
+Route::post('/user/store',[PagesController::class,'userstore'])->name('user.store');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 
@@ -56,17 +60,10 @@ Route::middleware('auth')->group(function () {
  Route::get('/contacts',[PagesController::class,'contact'])->name('contacts');
 
 
-Route::get('/userlogin',[PagesController::class,'userlogin'])->name('userlogin');
- Route::post('/userregister',[PagesController::class,'userregister'])->name('userregister');
+// Route::get('/userlogin',[PagesController::class,'userlogin'])->name('userlogin');
+//  Route::post('/userregister',[PagesController::class,'userregister'])->name('userregister');
 
 
-//  Route::get('/login', [RegisteredUserController::class, 'showLoginForm'])->name('login');
-//  Route::post('/login', [RegisteredUserController::class, 'login']);
-//  Route::post('/logout', [RegisteredUserController::class, 'logout'])->name('logout');
-
-
-//  Route::get('/register', [RegisteredUserController::class, 'showRegistrationForm'])->name('register');
-//  Route::post('/register', [RegisteredUserController::class, 'register']);
 
 
  Route::get('/product',[ProductController::class,'index'])->name('products.index');
@@ -75,7 +72,8 @@ Route::get('/userlogin',[PagesController::class,'userlogin'])->name('userlogin')
  Route::get('/product/{id}/edit', [ProductController::class,'edit'])->name('products.edit');
  Route::post('/product/{id}/update', [ProductController::class,'update'])->name('products.update');
  Route::post('/product/destroy', [ProductController::class,'destroy'])->name('products.destroy');
- Route::get('/products/{id}',[ProductController::class,'show'])->name('products.show');
+
+ Route::get('/product/{product}', [ProductController::class, 'show'])->name('products.show');
 
 //  Route::get('cart', [CartController::class, 'index'])->name('cart.index');
 //  Route::post('cart/{product}', [CartController::class, 'add'])->name('cart.add');
@@ -88,7 +86,11 @@ Route::get('/userlogin',[PagesController::class,'userlogin'])->name('userlogin')
 
 Route::post('/addcart/{id}', [PagesController::class, 'addcart'])->name('addcart');
 
+Route::post('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+Route::delete('/cart/remove/{product}', [CartController::class, 'remove'])->name('cart.remove');
 
+Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
 
 

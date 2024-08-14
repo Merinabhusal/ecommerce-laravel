@@ -27,10 +27,10 @@
                 <li><a href="{{route('products')}}"class="hover:underline">Products</a></li>
                 <li><a href="{{route('about')}}"class="hover:underline">About</a></li>
                 <li><a href="{{route('contacts')}}"class="hover:underline">Contact</a></li>
-          <li class="nav-item"><a class="nav-link" href=""><i class="fas fa-shopping-cart"></i>Cart[]</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{route('cart.index')}}"><i class="fas fa-shopping-cart"></i>Cart[{{$count}}]</a></li>
 
-
-<li><a href="{{route('userlogin')}}"class="hover:underline">Login</a></li>
+{{--
+<li><a href="{{route('userlogin')}}"class="hover:underline">Login</a></li> --}}
 
 
 

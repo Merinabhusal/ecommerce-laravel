@@ -86,11 +86,16 @@ class ProductController extends Controller
           return redirect (route('products.index'));
       }
 
-      public function show($product)
-      {
-        $product=Product::findOrFail($product);
-       return view('products.show', compact('product'));
+    //   public function show($product)
+    //   {
+    //     $product=Product::findOrFail($product);
+    //    return view('products.show', compact('product'));
 
+    //   }
+
+      public function show(Product $product)
+      {
+          return view('products.show', compact('product'));
       }
 
 

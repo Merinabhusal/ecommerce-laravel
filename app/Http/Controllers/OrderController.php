@@ -1,34 +1,42 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
-    public function store()
+    public function store(Request $request)
     {
-        $cartItems = Cart::where('user_id', auth()->id())->get();
-        $total = $cartItems->sum(function ($cartItem) {
-            return $cartItem->product->price * $cartItem->quantity;
-        });
+        $cart = Session::get('cart', []);
 
-        $order = Order::create([
-            'user_id' => auth()->id(),
-            'total' => $total,
-            'status' => 'pending'
-        ]);
-
-        foreach ($cartItems as $cartItem) {
-            $order->products()->attach($cartItem->product_id, ['quantity' => $cartItem->quantity]);
+        if (!$cart) {
+            return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
         }
 
-        Cart::where('user_id', auth()->id())->delete();
+        $order = Order::create([
+            'user_id' => Auth::id(),
+            'total' => array_sum(array_column($cart, 'price')),
+            'status' => 'pending',
+        ]);
 
-        return redirect()->route('orders.index');
+        foreach ($cart as $item) {
+            $order->items()->create([
+                'product_id' => $item['product']->id,
+                'quantity' => $item['quantity'],
+                'price' => $item['product']->price,
+            ]);
+
+            // Reduce stock
+            $product = Product::find($item['product']->id);
+            $product->decrement('stock', $item['quantity']);
+        }
+
+        Session::forget('cart');
+
+        return redirect()->route('products.index')->with('success', 'Order placed successfully!');
     }
 }
-
-

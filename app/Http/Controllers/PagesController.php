@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
 class PagesController extends Controller
 {
@@ -35,7 +38,7 @@ else
 $data=product::paginate(3);
 $user=auth()->user();
 
-$count=Cart::where('email',$user->email)->count();
+$count= Cart::where('email',$user->email)->count();
 
 return view('user',compact('data','count'));
 }
@@ -43,11 +46,16 @@ return view('user',compact('data','count'));
 
 }
 
-public function showCart()
-{
-    $count = 5;
-    return view('layouts.masters', compact('count'));
-}
+// public function showCart()
+// {
+//     $count =5;
+//     return view('layouts.masters', compact('count'));
+// }
+
+
+
+
+
 
 
 public function about(){
@@ -104,6 +112,25 @@ public function userregister(Request $request)
         // Your registration logic here
         return view('userregister'); // Or whatever view you want to return
     }
+
+
+    public function userstore(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users|max:255',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+
+        ]);
+
+        $data['password'] = Hash::make($data['password']);
+        $data['role'] = 'user';
+
+        User::create($data);
+
+        return redirect(route('home'));
+    }
+
 
 
 
