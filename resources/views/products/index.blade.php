@@ -3,7 +3,6 @@
 @section('heading')
 Products
 @endsection
-
 @section('content')
 <div class="flex justify-end ">
 <a class="text-2xl rounded-lg bg-green-500  text-white px-2 py-2" href="{{route('products.create')}}">Add Product</a>

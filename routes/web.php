@@ -41,7 +41,7 @@ Route::get('/', function () {
 
 
 
-Route::get('/userlogin',[PagesController::class,'userlogin'])->name('userlogin');
+ Route::get('/userlogin',[PagesController::class,'userlogin'])->name('userlogin');
 Route::get('/userregister',[PagesController::class,'userregister'])->name('user.register');
 Route::post('/user/store',[PagesController::class,'userstore'])->name('user.store');
 
@@ -55,53 +55,28 @@ Route::middleware('auth')->group(function () {
 
 
 
+// Frontend
  Route::get('/products',[PagesController::class,'index'])->name('products');
  Route::get('/about',[PagesController::class,'about'])->name('about');
  Route::get('/contacts',[PagesController::class,'contact'])->name('contacts');
+Route::post('/addcart/{id}', [PagesController::class, 'addcart'])->name('addcart');
+Route::get('/cart/view', [PagesController::class,'viewcart'])->name('viewcart');
+Route::get('/products/{id}', [PagesController::class, 'viewproduct'])->name('viewproduct');
 
 
-// Route::get('/userlogin',[PagesController::class,'userlogin'])->name('userlogin');
-//  Route::post('/userregister',[PagesController::class,'userregister'])->name('userregister');
 
 
-
-
+//ProductsController
  Route::get('/product',[ProductController::class,'index'])->name('products.index');
  Route::get('/product/create', [ProductController::class,'create'])->name('products.create');
  Route::post('/product/store',[ProductController::class,'store'])->name('products.store');
  Route::get('/product/{id}/edit', [ProductController::class,'edit'])->name('products.edit');
  Route::post('/product/{id}/update', [ProductController::class,'update'])->name('products.update');
  Route::post('/product/destroy', [ProductController::class,'destroy'])->name('products.destroy');
-
- Route::get('/product/{product}', [ProductController::class, 'show'])->name('products.show');
-
-//  Route::get('cart', [CartController::class, 'index'])->name('cart.index');
-//  Route::post('cart/{product}', [CartController::class, 'add'])->name('cart.add');
-//  Route::delete('cart/{product}', [CartController::class, 'remove'])->name('cart.remove');
-
-//  Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
+ Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
 
-
-
-Route::post('/addcart/{id}', [PagesController::class, 'addcart'])->name('addcart');
-
-Route::post('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
-Route::delete('/cart/remove/{product}', [CartController::class, 'remove'])->name('cart.remove');
-
-Route::post('/order', [OrderController::class, 'store'])->name('order.store');
-
-
-
-
-
-
-
-
-
-
-
+//FeaturedItemsController
 Route::get('/featureditem',[FeaturedItemController::class,'index'])->name('featureditem.index');
     Route::get('/featureditem/create', [FeaturedItemController::class,'create'])->name('featureditem.create');
     Route::post('/featureditem/store', [FeaturedItemController::class,'store'])->name('featureditem.store');
@@ -109,7 +84,7 @@ Route::get('/featureditem',[FeaturedItemController::class,'index'])->name('featu
     Route::post('/featureditem/{id}/update', [FeaturedItemController::class,'update'])->name('featureditem.update');
     Route::post('/featureditem/destroy', [FeaturedItemController::class,'destroy'])->name('featureditem.destroy');
 
-
+//TestimonialsController
 Route::get('/testimonial',[TestimonialController::class,'index'])->name('testimonials.index');
     Route::get('/testimonial/create', [TestimonialController::class,'create'])->name('testimonials.create');
     Route::post('/testimonial/store', [TestimonialController::class,'store'])->name('testimonials.store');
@@ -117,7 +92,7 @@ Route::get('/testimonial',[TestimonialController::class,'index'])->name('testimo
     Route::post('/testimonial/{id}/update', [TestimonialController::class,'update'])->name('testimonials.update');
     Route::post('/testimonial/destroy', [TestimonialController::class,'destroy'])->name('testimonials.destroy');
 
-
+//categoriescontroller
    Route::get('/category',[categoriesController::class,'index'])->name('category.index');
     Route::get('/category/create', [categoriesController::class,'create'])->name('category.create');
     Route::post('/category/store', [categoriesController::class,'store'])->name('category.store');
@@ -125,12 +100,19 @@ Route::get('/testimonial',[TestimonialController::class,'index'])->name('testimo
     Route::post('/category/{id}/update', [categoriesController::class,'update'])->name('category.update');
     Route::post('/category/destroy', [categoriesController::class,'destroy'])->name('category.destroy');
 
-
-
-    Route::get('/contact',[ContactController::class,'index'])->name('contact.index');
+//contactcontroller
+   Route::get('/contact',[ContactController::class,'index'])->name('contact.index');
     Route::post('/contact/store', [ContactController::class,'store'])->name('contact.store');
     Route::post('/contact/destroy', [ContactController::class,'destroy'])->name('contact.destroy');
 
+//Cart Controller
+Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart/show', [CartController::class,'show'])->name('cart.show');
+Route::post('cart/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::post('/cart/clear', [CartController::class,'clearCart'])->name('cart.clear');
+
+// Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

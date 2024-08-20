@@ -3,58 +3,66 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\categories;
 use Illuminate\Http\Request;
 
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 
     {
-        public function index(Product $product)
-    {
-        // Retrieve the cart from the session
-        $carts = Session::get('cart', ['']);
-        $product = Product::find($product);
-
-        return view('cart.index', compact('carts', 'product'));
-    }
-
-
-
-         public function add(Request $request, $id)
-        {
-            $product = Product::find($id);
-
-            if (!$product) {
-                return redirect()->route('products.index')->with('error', 'Product not found.');
-            }
-
-            $cart = Session::get('cart', ['']);
-
-            // Check if the product already exists in the cart
-            if (isset($cart[$id])) {
-                // Update quantity if the product exists
-                $cart[$id]['quantity'] += $request->quantity;
-            } else {
-                // Add new product to cart
-                $cart[$id] = [
-                    'product' => $product,
-                    'quantity' => $request->quantity,
-                ];
-            }
-
-            Session::put('cart', $cart);
-
-            return redirect()->route('cart.index')->with('success', $product->product_name . ' added to cart!');
-        }
-
-
-        public function showCart()
+        public function index()
         {
             $cartItems = Cart::where('user_id', auth()->id())->get();
-            $count = $cartItems->count(); // Counting the number of items in the cart
-
-            return view('cart', compact('cartItems', 'count'));
+            return view('cart.index', compact('cartItems'));
         }
+
+         public function show()
+       {
+           $cartItems = Cart::where('user_id', Auth::id())->with('product')->get();
+
+           return view('cart.show', compact('cartItems'));
+       }
+
+
+public function addToCart(Request $request)
+{
+    $request->validate([
+        'product_id' => 'required|exists:products,id',
+        'quantity' => 'required|integer|min:1',
+    ]);
+
+    $cartItem = Cart::updateOrCreate(
+        [
+            'user_id' => Auth::id(),
+            'product_id' => $request->input('product_id')
+        ],
+        [
+            'quantity' => DB::raw('quantity + '.$request->input('quantity'))
+        ]
+    );
+
+    return back()->with('success', 'Product added to cart successfully!');
 }
+
+
+
+
+       public function removeFromCart(Request $request)
+        {
+            Cart::where('user_id', auth()->id())
+                    ->where('product_id', $request->input('product_id'))
+                    ->delete();
+
+            return redirect()->route('cart.show')->with('success', 'Item removed from cart!');
+        }
+
+        public function clearCart()
+        {
+            Cart::where('user_id', auth()->id())->delete();
+            return redirect()->route('cart.show')->with('success', 'Cart cleared!');
+        }
+    }

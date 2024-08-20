@@ -18,7 +18,7 @@ class OrderController extends Controller
         }
 
         $order = Order::create([
-            'user_id' => Auth::id(),
+            'email' => Auth::id(),
             'total' => array_sum(array_column($cart, 'price')),
             'status' => 'pending',
         ]);

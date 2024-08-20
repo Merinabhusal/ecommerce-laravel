@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -86,17 +87,22 @@ class ProductController extends Controller
           return redirect (route('products.index'));
       }
 
-    //   public function show($product)
+    //   public function show()
     //   {
-    //     $product=Product::findOrFail($product);
-    //    return view('products.show', compact('product'));
+    //     $products = Product::where('id')->firstOrFail();
 
+    //       return view('products.show', compact('products'));
     //   }
 
-      public function show(Product $product)
-      {
-          return view('products.show', compact('product'));
-      }
+
+      public function show($id) {
+        $products = Product::where('id')->firstOrFail();
+       if (!$products) {
+            abort(404, 'Product not found');
+        }
+
+        return view('products.show', compact('products'));
+    }
 
 
 

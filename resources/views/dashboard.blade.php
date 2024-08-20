@@ -35,6 +35,12 @@ Dashboard
             <h1 class="text-xl">TotalContacts</h1>
             <h1 class="text-4xl font-bold"></h1>
         </div>
+        <div class="bg-pink-600 text-white rounded-lg flex justify-between py-4 px-2">
+            <h1 class="text-xl">TotalCarts</h1>
+            <h1 class="text-4xl font-bold"></h1>
+        </div>
+
+
 
 </div>
 <div>

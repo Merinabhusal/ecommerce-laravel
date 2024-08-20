@@ -12,15 +12,11 @@
                 {{-- <p class="text-gray-700">{{ $product->description }}</p> --}}
 
 
-                <form action="{{route('cart.index')}}" method="POST">
-
-
+                <form action="{{route('viewproduct', ['id' => $product->id])}}" method="POST">
                     @csrf
-            <input type="number"value="1" min="1"class="form-control"style="width:100px" name="quantity">
-<br>
-
-<input class="btn btn-primary bg-black text-white px-4 py-2"type="submit" value="Add Cart">
-
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    <input type="number" name="quantity" value="1" min="1">
+                    <button type="submit">Add to Cart</button>
                 </form>
             </div>
         @endforeach
