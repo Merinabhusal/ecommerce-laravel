@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
@@ -14,55 +13,60 @@ use Illuminate\Support\Facades\Session;
 class CartController extends Controller
 
     {
-        public function index()
+        public function addToCart(Request $request, $id)
         {
-            $cartItems = Cart::where('user_id', auth()->id())->get();
-            return view('cart.index', compact('cartItems'));
+            // Find the product by ID
+            $product = Product::find($id);
+
+            // Check if the product exists
+            if (!$product) {
+                return redirect()->back()->with('error', 'Product not found.');
+            }
+
+            // Get the current cart from session or create a new empty one
+            $cart = session()->get('cart', []);
+
+            // Check if the product is already in the cart
+            if (isset($cart[$id])) {
+                // If it exists, increase the quantity
+                $cart[$id]['quantity'] += $request->input('quantity', 1);
+            } else {
+                // Otherwise, add the product to the cart with initial quantity
+                $cart[$id] = [
+                    "name" => $product->product_name,
+                    "quantity" => $request->input('quantity', 1),
+                    "price" => $product->price,
+                    "photopath" => $product->photopath
+                ];
+            }
+
+            // Save the updated cart to the session
+            session()->put('cart', $cart);
+
+            // Redirect to the cart page or back to the product page with success message
+            return redirect()->route('cart.view')->with('success', 'Product added to cart!');
         }
 
-         public function show()
-       {
-           $cartItems = Cart::where('user_id', Auth::id())->with('product')->get();
 
-           return view('cart.show', compact('cartItems'));
-       }
+            // View cart items
+            public function viewCart()
+            {
+                return view('cart.index'); // Ensure you have a cart/index.blade.php view
+            }
 
-
-public function addToCart(Request $request)
-{
-    $request->validate([
-        'product_id' => 'required|exists:products,id',
-        'quantity' => 'required|integer|min:1',
-    ]);
-
-    $cartItem = Cart::updateOrCreate(
-        [
-            'user_id' => Auth::id(),
-            'product_id' => $request->input('product_id')
-        ],
-        [
-            'quantity' => DB::raw('quantity + '.$request->input('quantity'))
-        ]
-    );
-
-    return back()->with('success', 'Product added to cart successfully!');
-}
-
-
-
-
-       public function removeFromCart(Request $request)
-        {
-            Cart::where('user_id', auth()->id())
-                    ->where('product_id', $request->input('product_id'))
-                    ->delete();
-
-            return redirect()->route('cart.show')->with('success', 'Item removed from cart!');
+            // Remove product from cart
+            public function removeFromCart($id)
+            {
+                $data=Cart::find($id);
+                $data->delete();
+return redirect()->back()->with('message','Product has been successfully removed from cart');
         }
 
-        public function clearCart()
-        {
-            Cart::where('user_id', auth()->id())->delete();
-            return redirect()->route('cart.show')->with('success', 'Cart cleared!');
-        }
+
+
+
     }
+
+
+
+

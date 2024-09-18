@@ -12,19 +12,22 @@ use Illuminate\Validation\Rules;
 
 class PagesController extends Controller
 {
+
     public function index(){
 
         $products=Product::all();
+        $count=Cart::where('user_id',auth()->user()->id)->count();
 
-        return view('products',['products'=>$products]);
+        return view('products',compact('count', 'products'));
 
         }
 
-public function redirect()
-{
-$usertype=Auth::user()->usertype;
 
-if($usertype=='1')
+      public function redirect()
+    {
+     $usertype=Auth::user()->usertype;
+
+     if($usertype=='1')
 
 {
 
@@ -34,32 +37,37 @@ return view('admin');
 else
 {
 
-$data=product::paginate(3);
-$user=auth()->user();
+    $data = Product::paginate(3);
+    $user = auth()->user();
 
-$count= Cart::where('user_id',$user->user_id)->count();
+    if ($user) {
+        // Count cart items for the logged-in user
+        $counts = Cart::where('user_id', $user->id)->count();
+    } else {
+        // If no user is logged in, set cart count to 0
+        $counts = 0;
+    }
 
-return view('user',compact('data','count'));
+    $data = Product::paginate(3);
+
+    return view('user', compact('data', 'counts'));
+
 }
-
-
-}
-public function showCart()
- {
-    $count =5;
-  return view('layouts.masters', compact('count'));
- }
+    }
 
 
 public function about(){
+    $count=Cart::where('user_id',auth()->user()->id)->count();
+    return view('about', compact('count'));
 
-return view('about');
+
 
 }
 
  public function contact (){
+    $count=Cart::where('user_id',auth()->user()->id)->count();
 
-    return view('contact');
+    return view('contact',compact('count'));
 }
 
 
@@ -80,26 +88,70 @@ public function userstore(Request $request)
         return redirect(route('home'));
     }
 
-public function addcart(Request $data)
-{
-if(session()->has('id'))
+     public function addcart(Request $data,int $product_id)
 {
 
+
+
 $item=new Cart();
-$item->user_id=session()->get('id');
-$item->product_id=$data->input['id'];
+$item->user_id=auth()->user()->id;
+$item->product_id=$product_id;
 $item->quantity=$data->input('quantity');
+$product=Product::find($product_id);
+
+$item->total=$product->price * $data->input('quantity');
+
 $item->save();
 
 return redirect()->back()->with('message','Product has been successfully added to cart');
+
+
+
 }
-else
+
+
+
+
+
+public function Cart(Request $request)
 {
+    // Handle query parameters
+    $productId = $request->query('product_id');
+    $quantity = $request->query('quantity');
 
-    return redirect('login')->with('error','Please login to the system and try again');
+    if ($productId && $quantity) {
+        $product = Product::find($productId);
+
+        if ($product) {
+            $cart = session()->get('cart', []);
+
+            // If product already exists in the cart, update quantity
+            if (isset($cart[$productId])) {
+                $cart[$productId]['quantity'] += $quantity;
+            } else {
+                // Add product to cart if it doesn't exist
+                $cart[$productId] = [
+                    "name" => $product->name,
+                    "quantity" => $quantity,
+                    "price" => $product->price,
+                    "photopath" => $product->photopath
+                ];
+            }
+
+            session()->put('cart', $cart);
+            return redirect()->route('cart.view')->with('success', 'Product added to cart!');
+        }
+    }
+
+    // Display the cart view
+    return view('cart.index');
 }
 
-}
+
+
+
+
+
 
 public function userlogin(Request $request)
 {
@@ -114,37 +166,49 @@ public function userregister(Request $request)
         return view('userregister'); // Or whatever view you want to return
     }
 
-
-    public function viewcart()
-    {
-        $cartItems = Cart::where('user_id', Auth::id())->with('product')->get();
-        $count=Cart::where('user_id', Auth::id())->count();
-
-        return view('viewcart', compact('cartItems','count'));
+    public function viewcart() {
+$user=auth()->user();
+$count=Cart::where('user_id',$user->id)->count();
+         $cartItems = Cart::with('product')
+                       ->where('user_id', auth()->id())
+                     ->get();
+        return view('viewcart', compact('count', 'cartItems'));
     }
 
 
-    //   public function viewproduct($id) {
-    //     $products = Product::where('id')->firstOrFail();
 
-    //      return view('viewproduct', compact('products'));
-    // }
+
+
+
 
 
 
     public function viewproduct($id) {
-        $viewproducts= Product::where('id', $id)->firstOrFail();
+     $product= Product::find($id);
+        $viewproduct= Product::find($id);
 
-           if (!$viewproducts) {
-            abort(404, 'Product not found');
-        }
 
-        return view('viewproduct', compact('viewproducts'));
+
+        return view('viewproduct', compact('viewproduct','product'));
+    }
+
+
+public function checkout()
+{
+    $cartItems = Cart::where('user_id', Auth::id())->with('product')->get();
+    $count=Cart::where('user_id', Auth::id())->count();
+    $totalamount = 0;
+
+    // Calculate total amount
+    foreach ($cartItems as $cart) {
+        $totalamount += $cart->quantity * $cart->product->price;
+    }
+
+    return view('checkout', compact('cartItems', 'totalamount','count'));
+}
+
     }
 
 
 
 
-
-
-}

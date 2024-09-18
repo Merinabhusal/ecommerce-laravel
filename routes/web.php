@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\categoriesController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FeaturedItemController;
 use App\Http\Controllers\OrderController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestimonialController;
+use App\Models\Cart;
 use App\Models\categories;
 use App\Models\Contact;
 use App\Models\FeaturedItem;
@@ -36,7 +38,13 @@ Route::get('/', function () {
     $testimonials=Testimonial::all();
     $categories=categories::all();
      $contacts=Contact::all();
- return view('welcome', compact('products','featureditems','testimonials','categories','contacts'));
+     if (auth()->check()) {
+        $count = Cart::where('user_id', auth()->user()->id)->count();
+    } else {
+        $count = 0; // or handle it accordingly when no user is logged in
+    }
+
+ return view('welcome', compact('products','featureditems','testimonials','categories','contacts','count'));
 })->name('home');
 
 
@@ -61,8 +69,11 @@ Route::middleware('auth')->group(function () {
  Route::get('/contacts',[PagesController::class,'contact'])->name('contacts');
 Route::post('/addcart/{id}', [PagesController::class, 'addcart'])->name('addcart');
 Route::get('/cart/view', [PagesController::class,'viewcart'])->name('viewcart');
-Route::get('/products/{id}', [PagesController::class, 'viewproduct'])->name('viewproduct');
 
+Route::post('/cart/add', [PagesController::class, 'addToCart'])->name('cart.add');
+
+Route::get('/viewproduct/{id}', [PagesController::class, 'viewproduct'])->name('viewproduct');
+Route::get('/checkout', [PagesController::class, 'checkout'])->name('checkout');
 
 
 
@@ -73,7 +84,8 @@ Route::get('/products/{id}', [PagesController::class, 'viewproduct'])->name('vie
  Route::get('/product/{id}/edit', [ProductController::class,'edit'])->name('products.edit');
  Route::post('/product/{id}/update', [ProductController::class,'update'])->name('products.update');
  Route::post('/product/destroy', [ProductController::class,'destroy'])->name('products.destroy');
- Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+ Route::get('/products/show/{id}', [ProductController::class, 'show'])->name('products.show');
+
 
 
 //FeaturedItemsController
@@ -106,13 +118,22 @@ Route::get('/testimonial',[TestimonialController::class,'index'])->name('testimo
     Route::post('/contact/destroy', [ContactController::class,'destroy'])->name('contact.destroy');
 
 //Cart Controller
-Route::get('cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/cart', [CartController::class, 'addToCart'])->name('cart.add');
-Route::get('/cart/show', [CartController::class,'show'])->name('cart.show');
-Route::post('cart/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
-Route::post('/cart/clear', [CartController::class,'clearCart'])->name('cart.clear');
+Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.index');
+Route::post('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/remove-from-cart/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
 
-// Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+
+//CheckoutController
+
+// Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+// Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+
+
+
+
+Route::get('/order', [OrderController::class, 'store'])->name('order.store'); // For POST requests
+
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

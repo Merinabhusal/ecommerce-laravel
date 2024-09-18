@@ -19,13 +19,16 @@
                 <h2 class="text-xl font-semibold ">{{ $product->product_name }}</h2>
                 <p class="text-gray-900 font-bold ">Rs{{ $product->price }}</p>
                 <p class="text-gray-700">{{ $product->description }}</p>
-                <form action="{{route('viewproduct', ['id' => $product->id])}}" method="GET">
+                <form action="{{route('products',$product->id)}}" method="GET">
     @csrf
-    <input type="hidden" name="product_id" value="{{ $product->id }}">
-    <input type="number" name="quantity" value="1" min="1">
-    <button type="submit">Add to Cart</button>
-</form>
-</form>
+                   <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    <input type="number" name="quantity" value="1" min="1">
+                    <button type="submit">Add to Cart</button>
+                </form>
+
+
+
+
             </div>
         @endforeach
     </div>

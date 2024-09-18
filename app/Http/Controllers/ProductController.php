@@ -10,7 +10,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('products.index', compact('products'));
+        return view('products.index', compact('products',$products));
     }
 
     public function create()
@@ -87,22 +87,17 @@ class ProductController extends Controller
           return redirect (route('products.index'));
       }
 
-    //   public function show()
-    //   {
-    //     $products = Product::where('id')->firstOrFail();
+       public function show($id)
+    {
+        $product = Product::find($id);
 
-    //       return view('products.show', compact('products'));
-    //   }
-
-
-      public function show($id) {
-        $products = Product::where('id')->firstOrFail();
-       if (!$products) {
-            abort(404, 'Product not found');
+        if (!$product) {
+            return redirect()->back()->with('error', 'Product not found');
         }
 
-        return view('products.show', compact('products'));
+        return view('products.show', compact('product'));
     }
+
 
 
 

@@ -2,41 +2,56 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
     public function store(Request $request)
     {
-        $cart = Session::get('cart', []);
+        // Get the authenticated user
+        $user = auth()->user();
 
-        if (!$cart) {
-            return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
-        }
+        // Create a new Order instance
+        $order = new Order;
+        $order->user_id = $user->id; // Assign the user ID to the order
 
-        $order = Order::create([
-            'email' => Auth::id(),
-            'total' => array_sum(array_column($cart, 'price')),
-            'status' => 'pending',
-        ]);
+        // Assuming you have fields for total price and other order details
+        $order->total = array_sum(array_map(function($price, $quantity) {
+            return $price * $quantity;
+        }, $request->price ?? [], $request->quantity ?? []));
 
-        foreach ($cart as $item) {
-            $order->items()->create([
-                'product_id' => $item['product']->id,
-                'quantity' => $item['quantity'],
-                'price' => $item['product']->price,
-            ]);
 
-            // Reduce stock
-            $product = Product::find($item['product']->id);
-            $product->decrement('stock', $item['quantity']);
-        }
+        $order->status = 'Pending'; // You can set an initial order status like 'Pending'
+        $order->save(); // Save the order
 
-        Session::forget('cart');
+// Create order items
+// foreach ($request->product_name ?? [] as $index => $productName) {
+//     $orderItem = new Order;
 
-        return redirect()->route('products.index')->with('success', 'Order placed successfully!');
-    }
+//     $orderItem->product_name = $productName;
+//     $orderItem->price = $request->price[$index] ?? 0;
+//     $orderItem->quantity = $request->quantity[$index] ?? 1;
+//     $orderItem->save();
+// }
+
+// Clear the cart for the authenticated user
+DB::table('carts')->where('user_id', $user->id)->delete();
+
+// Redirect with a success message
+return redirect()->back()->with('success', 'Order placed successfully and cart cleared!');
 }
+
+
+
+
+
+
+}
+
+
+

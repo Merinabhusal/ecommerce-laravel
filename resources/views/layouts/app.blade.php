@@ -41,10 +41,12 @@
                 <a href="{{route('testimonials.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-feedback-line"></i>Testimonials</a>
                 <a href="{{route('category.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-book-shelf-line"></i>Shop By Category</a>
                 <a href="{{route('contact.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-contacts-book-line"></i>Contact</a>
-                <a href="{{route('cart.add')}}"class="p-2 block hover:bg-red-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-product-hunt-fill"></i>Cart</a>
-                <form action="{{route('logout')}}" method="POST">
-                  @csrf
-                    <button type="submit" class="p-2 block w-full text-left hover:bg-blue-500 hover:text-white text-lg border-gray-300"><i class="ri-logout-box-line"></i>Logout</button>
+
+
+
+                <form action="{{route('logout')}}"method="POST">
+                    @csrf
+                <input type="submit" value="Logout " class="p-2 block hover:bg-red-500 hover:text-white text-lg border-b border-gray-300">
                 </form>
 
 
@@ -69,6 +71,24 @@
             @yield('content')
         </div>
     </div>
+
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
 
 </body>
 
