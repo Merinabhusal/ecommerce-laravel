@@ -1,5 +1,7 @@
 <?php
 
+// use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -7,6 +9,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\categoriesController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DashboardController as ControllersDashboardController;
 use App\Http\Controllers\FeaturedItemController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PagesController;
@@ -53,13 +56,19 @@ Route::get('/', function () {
 Route::get('/userregister',[PagesController::class,'userregister'])->name('user.register');
 Route::post('/user/store',[PagesController::class,'userstore'])->name('user.store');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+
+Route::get('/dashboard', [DashboardController::class,'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
 
 Route::middleware('auth')->group(function () {
+
+
+
+
 
 
 
@@ -69,6 +78,9 @@ Route::middleware('auth')->group(function () {
  Route::get('/contacts',[PagesController::class,'contact'])->name('contacts');
 Route::post('/addcart/{id}', [PagesController::class, 'addcart'])->name('addcart');
 Route::get('/cart/view', [PagesController::class,'viewcart'])->name('viewcart');
+
+
+
 
 Route::post('/cart/add', [PagesController::class, 'addToCart'])->name('cart.add');
 
@@ -84,7 +96,9 @@ Route::get('/checkout', [PagesController::class, 'checkout'])->name('checkout');
  Route::get('/product/{id}/edit', [ProductController::class,'edit'])->name('products.edit');
  Route::post('/product/{id}/update', [ProductController::class,'update'])->name('products.update');
  Route::post('/product/destroy', [ProductController::class,'destroy'])->name('products.destroy');
- Route::get('/products/show/{id}', [ProductController::class, 'show'])->name('products.show');
+
+ Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+
 
 
 
@@ -131,8 +145,10 @@ Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
 
 
 
+Route::get('/order',[OrderController::class,'index'])->name('order.index');
+Route::get('/order', [OrderController::class, 'store'])->name('order.store');
+Route::get('/order/status/{id}/{status}',[OrderController::class,'status'])->name('order.status');
 
-Route::get('/order', [OrderController::class, 'store'])->name('order.store'); // For POST requests
 
 
 

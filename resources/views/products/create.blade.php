@@ -29,6 +29,13 @@ Create Product
 
 
 
+        <input type="text" name="category_id" placeholder="Enter Category ID" class="w-full rounded-lg">
+        @error('category_id')
+            <p class="text-red-500 text-xs mt-0">{{$message}}</p>
+        @enderror
+
+
+
         <input type="integer" name="price"placeholder="Enter Price" class="w-full rounded-lg mt-4 p-2 border border-gray-500" >
         @error('price')
             <p class="text-red-500 text-xs mt-0">{{$message}}</p>

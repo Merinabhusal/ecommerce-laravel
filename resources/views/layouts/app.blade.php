@@ -29,19 +29,19 @@
  @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
-
-  <body class="font-sans antialiased dark:bg-gray-700 dark:text-gray-100">
+    <body class="font-sans antialiased dark:bg-gray-700 dark:text-gray-100">
     <div class="flex">
         <div class=" fixed w-56 h-screen bg-gray-100 shadow">
             <img src="" class="mt-5 w-full" alt="">
             <div class="mt-5 text-blue-900">
                 <a href=""class="bg-blue-500 text-white p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-dashboard-2-line"></i> Dashboard</a>
-                <a href="{{route('products.index')}}"class="p-2 block hover:bg-red-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-product-hunt-fill"></i>Products</a>
-                <a href="{{route('featureditem.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-product-hunt-fill"></i>Featured Items</a>
+                <a href="{{route('products.index')}}"class="@if(request()->routeIs('products.*')) bg-blue-500 text-white @endif p-2 block hover:bg-red-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-product-hunt-fill"></i>Products</a>
+                {{-- <a href="{{route('featureditem.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-product-hunt-fill"></i>Featured Items</a> --}}
                 <a href="{{route('testimonials.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-feedback-line"></i>Testimonials</a>
                 <a href="{{route('category.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-book-shelf-line"></i>Shop By Category</a>
                 <a href="{{route('contact.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-contacts-book-line"></i>Contact</a>
 
+                {{-- <a href="{{ route('order.index') }}" class="text-x1 font-bold border-b-2 border-blue-500 block m1-4 px-2 py-1 hover:bg-blue-500 hover:text-white">Orders</a> --}}
 
 
                 <form action="{{route('logout')}}"method="POST">

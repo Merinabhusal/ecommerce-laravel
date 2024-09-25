@@ -48,19 +48,48 @@ class CartController extends Controller
         }
 
 
-            // View cart items
-            public function viewCart()
-            {
-                return view('cart.index'); // Ensure you have a cart/index.blade.php view
-            }
+//             // View cart items
+//             public function viewCart()
+//             {
+//                 return view('cart.index'); // Ensure you have a cart/index.blade.php view
+//             }
 
-            // Remove product from cart
-            public function removeFromCart($id)
-            {
-                $data=Cart::find($id);
-                $data->delete();
-return redirect()->back()->with('message','Product has been successfully removed from cart');
-        }
+//             // Remove product from cart
+//             public function removeFromCart($id)
+//             {
+//                 $data=Cart::find($id);
+//                 $data->delete();
+// return redirect()->back()->with('message','Product has been successfully removed from cart');
+//         }
+
+
+
+
+// View cart items
+public function viewCart()
+{
+    return view('cart.index'); // Ensure you have a cart/index.blade.php view
+}
+
+// Remove product from cart
+public function removeFromCart($id)
+{
+    // Find the cart item by ID
+    $cartItem = Cart::find($id);
+
+    // Check if the item exists in the cart
+    if ($cartItem) {
+        // Delete the item
+        $cartItem->delete();
+
+        // Redirect back with a success message
+        return redirect()->back()->with('message', 'Product has been successfully removed from the cart');
+    }
+
+    // If the cart item is not found, return an error message
+    return redirect()->back()->with('error', 'Product not found in the cart');
+}
+
 
 
 

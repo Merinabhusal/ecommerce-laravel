@@ -90,9 +90,6 @@ public function userstore(Request $request)
 
      public function addcart(Request $data,int $product_id)
 {
-
-
-
 $item=new Cart();
 $item->user_id=auth()->user()->id;
 $item->product_id=$product_id;
@@ -169,43 +166,57 @@ public function userregister(Request $request)
     public function viewcart() {
 $user=auth()->user();
 $count=Cart::where('user_id',$user->id)->count();
+
          $cartItems = Cart::with('product')
                        ->where('user_id', auth()->id())
                      ->get();
         return view('viewcart', compact('count', 'cartItems'));
     }
 
-
-
-
-
-
-
-
-
-    public function viewproduct($id) {
+      public function viewproduct($id) {
      $product= Product::find($id);
-        $viewproduct= Product::find($id);
+     $cartItems = Cart::where('user_id', Auth::id())->with('product')->get();
+     $viewproduct= Product::find($id);
+     $count=Cart::where('user_id',auth()->user()->id)->count();
+     $total= 0;
 
 
+     // Calculate total amount
+     foreach ($cartItems as $cart) {
+         $total += $cart->quantity * $cart->product->price;
 
-        return view('viewproduct', compact('viewproduct','product'));
+     }
+
+
+    return view('viewproduct', compact('viewproduct','product','count','total'));
     }
+
+
 
 
 public function checkout()
 {
     $cartItems = Cart::where('user_id', Auth::id())->with('product')->get();
+    $cart = session()->get('cart', []);
     $count=Cart::where('user_id', Auth::id())->count();
-    $totalamount = 0;
+    $total= 0;
+
 
     // Calculate total amount
     foreach ($cartItems as $cart) {
-        $totalamount += $cart->quantity * $cart->product->price;
+        $total += $cart->quantity * $cart->product->price;
     }
 
-    return view('checkout', compact('cartItems', 'totalamount','count'));
+    // Add Rs100 as a payment on delivery fee
+    $paymentFee = 100;
+
+
+    return view('checkout', compact('cartItems', 'total','count','cart' ,'paymentFee'));
+
+
 }
+
+
 
     }
 

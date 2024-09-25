@@ -1,34 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-
-use App\Http\Controllers\Controller;
-use App\Models\categories;
-use App\Models\Contact;
-use App\Models\FeaturedItem;
+namespace App\Http\Controllers;
 use App\Models\Product;
+use App\Models\FeaturedItem;
 use App\Models\Testimonial;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-
+use App\Models\Category;
+use App\Models\Contact;
+use App\Models\Cart;
+use App\Models\categories;
 
 class DashboardController extends Controller
 {
+    public function dashboard()
+    {
 
-public function dashboard()
-{
-$totalproducts=Product::count();
-$totalfeatureditem=FeaturedItem::count();
-$totaltestimonials=Testimonial::count();
-$totalcategories=categories::all();
-$totalcontacts=Contact::all();
-$date=Carbon::today()->subDays(30);
-return view('dashboard',compact('totalproducts','totalfeatureditem','totaltestimonials' ,'totalcategories','totalcontacts','date'));
+        $totalproducts = Product::count();
+        $totalitems = FeaturedItem::count();
+        $totaltestimonials = Testimonial::count();
+        $totalcategories = categories::count();
+        $totalcontacts = Contact::count();
+        $totalcarts = Cart::count();
 
+
+        return view('admin.dashboard', compact('totalproducts', 'totalitems', 'totaltestimonials', 'totalcategories', 'totalcontacts', 'totalcarts'));
+    }
 }
-
-
-
-}
-

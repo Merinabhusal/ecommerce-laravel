@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -10,48 +11,74 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
+
 {
+
+
+    public function index()
+    {
+        $orders = Order::all();
+        return view('order.index', compact('orders'));
+    }
+
+
     public function store(Request $request)
     {
         // Get the authenticated user
         $user = auth()->user();
 
+        // Get all cart items for the user
+        $cartItems = Cart::where('user_id', $user->id)->get();
+
+        // Check if cart is not empty
+        if ($cartItems->isEmpty()) {
+            return redirect()->back()->with('error', 'Your cart is empty!');
+        }
+
         // Create a new Order instance
         $order = new Order;
         $order->user_id = $user->id; // Assign the user ID to the order
 
-        // Assuming you have fields for total price and other order details
-        $order->total = array_sum(array_map(function($price, $quantity) {
-            return $price * $quantity;
-        }, $request->price ?? [], $request->quantity ?? []));
-
+        // Calculate the total price from the cart items
+        $order->total = $cartItems->sum(function($cartItem) {
+            return $cartItem->quantity * $cartItem->product->price;
+        });
 
         $order->status = 'Pending'; // You can set an initial order status like 'Pending'
         $order->save(); // Save the order
 
-// Create order items
-// foreach ($request->product_name ?? [] as $index => $productName) {
-//     $orderItem = new Order;
+        // Save each cart item to order items (assuming you have an OrderItem model)
+        foreach ($cartItems as $cartItem) {
+            $orderItem = new OrderItem();
+            $orderItem->order_id = $order->id;
+            $orderItem->product_id= $cartItem->product_id;
+            $orderItem->quantity = $cartItem->quantity;
+            $orderItem->price = $cartItem->product->price;
+            $orderItem->save();
+        }
 
-//     $orderItem->product_name = $productName;
-//     $orderItem->price = $request->price[$index] ?? 0;
-//     $orderItem->quantity = $request->quantity[$index] ?? 1;
-//     $orderItem->save();
-// }
+        // Clear the cart for the authenticated user
+        Cart::where('user_id', $user->id)->delete();
 
-// Clear the cart for the authenticated user
-DB::table('carts')->where('user_id', $user->id)->delete();
+        // Redirect to the home route with a success message
+        return redirect()->route('home')->with('success', 'Order has been placed successfully and cart cleared!');
+    }
 
-// Redirect with a success message
-return redirect()->back()->with('success', 'Order placed successfully and cart cleared!');
+
+    public function status($id,$status)
+    {
+        $order = Order::find($id);
+        $order->status = $status;
+        $order->save();
+        return redirect(route('order.index'))->with('success','Status changed to '.$status);
+    }
+
+
+
+
+
+
+
 }
-
-
-
-
-
-
-}
-
 
 

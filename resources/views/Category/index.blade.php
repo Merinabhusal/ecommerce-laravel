@@ -1,8 +1,8 @@
+
 @extends('layouts.app')
 @section('heading')
 Category
 @endsection
-
 @section('content')
 <div class="flex justify-end ">
 <a class="text-2xl rounded-lg bg-green-500  text-white px-2 py-2" href="{{route('category.create')}}">Add Category</a>
@@ -12,14 +12,14 @@ Category
     <thead>
         <tr>
            <th>Priority</th>
-            <th>Name</th>
+            <th> Category Name</th>
             <th>Photopath</th>
             <th>Action</th>
         </tr>
     </thead>
             @foreach ($categories as $category)
                 <tr>
-                    <td>{{$category->priority}}</td>
+                    <td>{{$category->id}}</td>
                     <td>{{$category->name }}</td>
                     <td><img class="h-32" src="{{asset('images/categories/'.$category->photopath)}}" alt=""></td>
                      <td>

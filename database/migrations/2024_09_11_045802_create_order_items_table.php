@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Schema;
             Schema::create('order_items', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('order_id');
+                $table->unsignedBigInteger('product_id');
                 $table->string('product_name');
                 $table->decimal('price', 10, 2);
                 $table->integer('quantity');

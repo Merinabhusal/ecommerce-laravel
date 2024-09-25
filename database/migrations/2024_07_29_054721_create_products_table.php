@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('priority');
             $table->string('product_name');
+            $table->foreignId('category_id')->constrained();
             $table->text('description');
             $table->decimal('price', 8, 2);
             $table->string('photopath');

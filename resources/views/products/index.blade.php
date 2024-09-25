@@ -15,9 +15,10 @@ Products
            <th>Priority</th>
             <th>Product_Name</th>
            <th>Price</th>
+           <th>Category_id</th>
            <th>Description</th>
            <th>Photopath</th>
-            <th>Actions</th>
+           <th>Actions</th>
         </tr>
     </thead>
             @foreach ($products as $product)
@@ -25,6 +26,7 @@ Products
                     <td>{{$product->priority}}</td>
                     <td>{{ $product->product_name }}</td>
                     <td>{{ $product->price }}</td>
+                     <td>{{$product->Category_id}}</td>
                     <td>{{ $product->description }}</td>
                     <td><img class="h-32" src="{{asset('images/products/'.$product->photopath)}}" alt=""></td>
 
@@ -37,8 +39,8 @@ Products
             @endforeach
         </table>
 
-       {{-- Delete Popup --}}
-<div id="popup" class="fixed hidden items-center justify-center inset-0 bg-blue-600 bg-opacity-50 backdrop-blur-sm">
+        {{-- Delete Popup --}}
+ <div id="popup" class="fixed hidden items-center justify-center inset-0 bg-blue-600 bg-opacity-50 backdrop-blur-sm">
     <form action="{{route('products.destroy')}}"method="POST"class="bg-white px-10 py-5 rounded-lg">
         @csrf
         <h1 class="text-2xl font-bold">Are you sure to Delete?</h1>
@@ -74,7 +76,9 @@ Products
 
 
 
-@endsection
+ @endsection
+
+
 
 
 

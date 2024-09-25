@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
-    <title>Cosmetic Store</title>
+    <title>Grocery Store</title>
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script defer src="scripts.js"></script>
@@ -21,21 +21,24 @@
 <body>
     <nav class="bg-pink-600 p-4 text-white">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="text-2xl font-bold">Cosmetic Store</div>
+            <div class="text-2xl font-bold">Grocery Store</div>
             <ul class="flex space-x-4 text-center">
                 <li><a href="{{ route('home') }}" class="hover:underline">Home</a></li>
                 <li><a href="{{route('products')}}"class="hover:underline">Products</a></li>
                 <li><a href="{{route('about')}}"class="hover:underline">About</a></li>
                 <li><a href="{{route('contacts')}}"class="hover:underline">Contact</a></li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('viewcart') }}">
+                     <a class="nav-link" href="{{ route('viewcart') }}">
                         <i class="fas fa-shopping-cart"></i> Cart
 <sup>{{$count}}</sup>
                     </a>
                 </li>
 
-{{--
-<li><a href="{{route('userlogin')}}"class="hover:underline">Login</a></li> --}}
+
+<li><a href="{{route('login')}}"class="hover:underline">Login</a></li>
+
+<li><a href="{{route('register')}}"class="hover:underline">Register</a></li>
+
 
 
 
