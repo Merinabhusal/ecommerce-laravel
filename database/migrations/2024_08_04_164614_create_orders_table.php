@@ -18,7 +18,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->decimal('total', 8, 2);
             $table->string('status')->default('pending');
-
+            $table->string('payment_method')->default('cash_on_delivery');
+            $table->string('shipping_address')->nullable();
             $table->timestamps();
         });
 

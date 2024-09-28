@@ -29,7 +29,7 @@ Create Product
 
 
 
-        <input type="text" name="category_id" placeholder="Enter Category ID" class="w-full rounded-lg">
+        <input type="text" name="category_idgit pull origin main" placeholder="Enter Category ID" class="w-full rounded-lg">
         @error('category_id')
             <p class="text-red-500 text-xs mt-0">{{$message}}</p>
         @enderror

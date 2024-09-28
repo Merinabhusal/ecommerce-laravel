@@ -34,6 +34,13 @@ Edit Products
     @enderror
 
 
+
+    <input type="text" name="category_id" placeholder="Enter Category ID" class="w-full rounded-lg">
+    @error('category_id')
+        <p class="text-red-500 text-xs mt-0">{{$message}}</p>
+    @enderror
+
+
  <div class="flex justify-center gap-5">
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Update Products</button>
         <a href="{{ route('products.index') }}" class="bg-red-600 text-white px-4 py-2 rounded-lg">Cancel</a>

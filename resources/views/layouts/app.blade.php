@@ -36,7 +36,7 @@
             <div class="mt-5 text-blue-900">
                 <a href=""class="bg-blue-500 text-white p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-dashboard-2-line"></i> Dashboard</a>
                 <a href="{{route('products.index')}}"class="@if(request()->routeIs('products.*')) bg-blue-500 text-white @endif p-2 block hover:bg-red-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-product-hunt-fill"></i>Products</a>
-                {{-- <a href="{{route('featureditem.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-product-hunt-fill"></i>Featured Items</a> --}}
+                 <a href="{{route('featureditem.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-product-hunt-fill"></i>Featured Items</a>
                 <a href="{{route('testimonials.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-feedback-line"></i>Testimonials</a>
                 <a href="{{route('category.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-book-shelf-line"></i>Shop By Category</a>
                 <a href="{{route('contact.index')}}"class="p-2 block hover:bg-blue-500 hover:text-white text-lg border-b border-gray-300"><i class="ri-contacts-book-line"></i>Contact</a>

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\categories;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -81,12 +82,8 @@ class ProductController extends Controller
 
     }
 
-
-
-
-       public function edit($id){
-
-    $products=Product::find($id);
+     public function edit($id){
+     $products=Product::find($id);
     return view('products.edit',compact('products'));
     }
 
@@ -135,6 +132,22 @@ class ProductController extends Controller
 
           // Return the product details view with the product data
           return view('products.show', compact('product'));
+      }
+
+
+
+
+      public function productsByCategory($id)
+      {
+          // Fetch all categories with their associated products
+          $category = categories::find($id);
+          $count=Cart::where('user_id',auth()->user()->id)->count();
+
+
+
+
+          // Return to the view with categories and products
+          return view('products_by_category', compact('category','count'));
       }
 
 

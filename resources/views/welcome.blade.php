@@ -29,9 +29,9 @@
                 <p class="text-gray-900 font-bold ">Rs{{ $product->price }}</p>
            <form action="{{route('addcart',$product->id)}}"method="POST">
         @csrf
-        <input type="number" value="1" min="1"class="form-control" style= "width:100px" name="quantity">
+        <input type="number" value="1" min="1"class="form-control " style= "width:100px" name="quantity">
         <br>
-        <input class="btn btn-primary"type="submit" value="Add to Shopping list">
+        <input class="btn btn-primary "type="submit" value="Add to Shopping list">
 
         </form>
 
@@ -52,22 +52,24 @@
             </div>
            </div>
         </section>
-
-          {{-- Featured Items --}}
- {{-- <section id="featured" class="py-2 px-6 bg-white">
-    <div class="container mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-8">Featured Items</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 ">
+{{--
+          Featured Items --}}
+          <div class="container mx-auto">
+            <h1 class="text-3xl font-bold mb-6">Featured Products</h1>
+            <div class="grid-cols-4 gap-6 flex px-6 py-2">
             @foreach ($featureditems as $featureditem )
             <div class="rounded-lg shadow border justify-center">
-                <img src="{{asset('images/featureditems/'.$featureditem->photopath)}}" alt="" class=" w-full h-48 object-cover rounded-t-lg ">
+                <img src="{{asset('images/featureditems/'.$featureditem->photopath)}}" alt="" class=" h-48 object-cover">
                 <p class="text-black text-bold text-xl">{{ $featureditem->name }}</p>
-                <p class="text-pink-800 ">{{ $featureditem->price }}</p>
+                 {{-- <p class="text-pink-800 text-center ">{{ $featureditem->price }}</p> --}}
+
+
+
              </div>
      @endforeach
 </div>
     </div>
-</section> --}}
+</section>
 
  <!-- About Us Section -->
  <section class="py-12 bg-white">
@@ -113,12 +115,14 @@
 <!-- Categories Section -->
 <section id="categories" class="py-12 bg-white">
     <div class="container mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-8">Shop by Category</h2>
+        <h2 class="text-3xl font-bold mb-8">Category</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             @foreach ($categories as $categories)
             <div class="bg-pink-100 p-6 rounded-lg shadow-lg">
                 <img src="{{asset('images/categories/'.$categories->photopath)}}" alt="" class=" w-full h-48 object-cover rounded-t-lg">
                 <p class="text-black text-bold text-xl">{{ $categories->name }}</p>
+                <a href="{{route('products.by.category',$categories->id)}}" class="text-blue-600 font-medium hover:text-blue-800">View Product</a>
+
             </div>
             @endforeach
         </div>

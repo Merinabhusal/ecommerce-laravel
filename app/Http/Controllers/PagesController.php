@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\categories;
+use App\Models\FeaturedItem;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Contracts\Session\Session;
@@ -110,6 +111,9 @@ return redirect()->back()->with('message','Product has been successfully added t
 
 
 
+
+
+
 public function Cart(Request $request)
 {
     // Handle query parameters
@@ -190,6 +194,27 @@ $count=Cart::where('user_id',$user->id)->count();
 
     return view('viewproduct', compact('viewproduct','product','count','total'));
     }
+
+
+
+
+    public function viewfeaturedproduct($id) {
+        $featuredproduct= FeaturedItem::find($id);
+        $cartItems = Cart::where('user_id', Auth::id())->with('featuredproduct')->get();
+        $viewfeaturedproduct= FeaturedItem::find($id);
+        $count=Cart::where('user_id',auth()->user()->id)->count();
+        $total= 0;
+
+
+        // Calculate total amount
+        foreach ($cartItems as $cart) {
+            $total += $cart->quantity * $cart->product->price;
+
+        }
+
+
+       return view('viewfeaturedproduct', compact('viewfeaturedproduct','featuredproduct','count','total'));
+       }
 
 
 

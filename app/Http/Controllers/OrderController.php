@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Session;
 class OrderController extends Controller
 
 {
-
-
-    public function index()
+      public function index()
     {
         $orders = Order::all();
         return view('order.index', compact('orders'));
@@ -24,10 +22,14 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+
+
+
         // Get the authenticated user
         $user = auth()->user();
 
-        // Get all cart items for the user
+
+      // Get all cart items for the user
         $cartItems = Cart::where('user_id', $user->id)->get();
 
         // Check if cart is not empty
@@ -44,14 +46,17 @@ class OrderController extends Controller
             return $cartItem->quantity * $cartItem->product->price;
         });
 
-        $order->status = 'Pending'; // You can set an initial order status like 'Pending'
+        $order->status = 'Pending';
+        $order->payment_method = 'cash_on_delivery'; // Payment method is COD
+        $order->shipping_address = $request->shipping_address; // You can set an initial order status like 'Pending'
         $order->save(); // Save the order
 
         // Save each cart item to order items (assuming you have an OrderItem model)
         foreach ($cartItems as $cartItem) {
             $orderItem = new OrderItem();
             $orderItem->order_id = $order->id;
-            $orderItem->product_id= $cartItem->product_id;
+            $orderItem->product_id = $cartItem->product_id;
+
             $orderItem->quantity = $cartItem->quantity;
             $orderItem->price = $cartItem->product->price;
             $orderItem->save();
@@ -63,6 +68,7 @@ class OrderController extends Controller
         // Redirect to the home route with a success message
         return redirect()->route('home')->with('success', 'Order has been placed successfully and cart cleared!');
     }
+
 
 
     public function status($id,$status)

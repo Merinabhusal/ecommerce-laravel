@@ -15,7 +15,7 @@ Products
            <th>Priority</th>
             <th>Product_Name</th>
            <th>Price</th>
-           <th>Category_id</th>
+           <th>Category</th>
            <th>Description</th>
            <th>Photopath</th>
            <th>Actions</th>
@@ -26,7 +26,7 @@ Products
                     <td>{{$product->priority}}</td>
                     <td>{{ $product->product_name }}</td>
                     <td>{{ $product->price }}</td>
-                     <td>{{$product->Category_id}}</td>
+                     <td>{{$product->category->name}}</td>
                     <td>{{ $product->description }}</td>
                     <td><img class="h-32" src="{{asset('images/products/'.$product->photopath)}}" alt=""></td>
 

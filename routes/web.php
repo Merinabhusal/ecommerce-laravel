@@ -82,9 +82,14 @@ Route::get('/cart/view', [PagesController::class,'viewcart'])->name('viewcart');
 
 
 
+
 Route::post('/cart/add', [PagesController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/adds', [PagesController::class, 'cart'])->name('cart.adds');
+
 
 Route::get('/viewproduct/{id}', [PagesController::class, 'viewproduct'])->name('viewproduct');
+Route::get('/viewfeaturedproduct/{id}', [PagesController::class, 'viewfeaturedproduct'])->name('viewfeaturedproduct');
+
 Route::get('/checkout', [PagesController::class, 'checkout'])->name('checkout');
 
 
@@ -96,8 +101,12 @@ Route::get('/checkout', [PagesController::class, 'checkout'])->name('checkout');
  Route::get('/product/{id}/edit', [ProductController::class,'edit'])->name('products.edit');
  Route::post('/product/{id}/update', [ProductController::class,'update'])->name('products.update');
  Route::post('/product/destroy', [ProductController::class,'destroy'])->name('products.destroy');
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
- Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+
+
+ Route::get('/products-by-category/{id}', [ProductController::class, 'productsByCategory'])->name('products.by.category');
+
 
 
 
@@ -146,7 +155,7 @@ Route::get('/cart', [CartController::class, 'viewCart'])->name('cart.view');
 
 
 Route::get('/order',[OrderController::class,'index'])->name('order.index');
-Route::get('/order', [OrderController::class, 'store'])->name('order.store');
+Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 Route::get('/order/status/{id}/{status}',[OrderController::class,'status'])->name('order.status');
 
 

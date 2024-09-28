@@ -3,7 +3,7 @@
 
 <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
 
-  <form action="{{ route('order.store') }}" method="GET" class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+  <form action="{{ route('order.store') }}" method="POST" class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     @csrf
 
     <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12 xl:gap-16 grid grid-cols-2">
@@ -29,9 +29,10 @@
             </div>
 
             <div>
-              <label for="address" class="mb-2 block font-medium text-gray-900 dark:text-white">Address</label>
-              <input type="text" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white" name="address" placeholder="Address" value="{{ auth()->user()->address ?? '' }}">
+              <label for="shipping_address" class="mb-2 block font-medium text-gray-900 dark:text-white">Shipping Address</label>
+              <input type="text" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white" name="shipping_address" placeholder="shipping_address" value="{{ auth()->user()->address }}">
             </div>
+
 
            </div>
         </div>
@@ -58,7 +59,8 @@
           <div class="-my-3 divide-y divide-gray-200 dark:divide-gray-800">
             <div class="min-w-0 flex-1 space-y-8">
               <div class="space-y-4">
-                <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Checkout</h2>
+                <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Checkout-Cash on Delivery</h2>
+
 
 
 

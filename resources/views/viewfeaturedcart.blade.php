@@ -19,12 +19,12 @@
                                     class="h-32 w-44 object-cover shadow-lg my-2">
                                 <div class="px-4 py-1 text-xl">
                                     <!-- Hidden inputs to send product details -->
-                                    <input type="text" name="product_name[]" value="{{ $cart->product->product_name }}"
+                                    <input type="text" name="name[]" value="{{ $cart->featureditem->name }}"
                                         hidden>
-                                    <h2 class="text-2xl font-bold">{{ $cart->product->product_name }}</h2>
+                                    <h2 class="text-2xl font-bold">{{ $cart->featureditem->name }}</h2>
 
-                                    <input type="text" name="price[]" value="{{ $cart->product->price }}" hidden>
-                                    <h2 class="text-2xl ">Rs {{ $cart->product->price }}</h2>
+                                    <input type="text" name="price[]" value="{{ $cart->featureditem->price }}" hidden>
+                                    <h2 class="text-2xl ">Rs {{ $cart->featureditem->price }}</h2>
 
                                     <!-- Quantity input with increment/decrement buttons -->
                                     <div class="flex items-center my-2">
@@ -38,11 +38,11 @@
                                     <!-- Display product total (price * quantity) -->
                                     <h2 class="text-2xl product-subtotal">Subtotal:Rs
                                         <span
-                                            id="cart-{{ $cart->id }}">{{ $cart->quantity * $cart->product->price }}</span>
+                                            id="cart-{{ $cart->id }}">{{ $cart->quantity * $cart->featureditem->price }}</span>
                                     </h2>
 
                                     @php
-                                        $total += $cart->quantity * $cart->product->price; // Add to total amount
+                                        $total += $cart->quantity * $cart->featureditem->price; // Add to total amount
                                     @endphp
 
                                     <!-- Delete button for each cart item -->

@@ -4,9 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-
-
-    class CreateOrderItemsTable extends Migration
+      class CreateOrderItemsTable extends Migration
     {
         public function up()
         {
@@ -14,7 +12,7 @@ use Illuminate\Support\Facades\Schema;
                 $table->id();
                 $table->unsignedBigInteger('order_id');
                 $table->unsignedBigInteger('product_id');
-                $table->string('product_name');
+
                 $table->decimal('price', 10, 2);
                 $table->integer('quantity');
                 $table->timestamps();

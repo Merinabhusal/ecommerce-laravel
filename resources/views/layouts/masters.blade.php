@@ -35,10 +35,23 @@
                 </li>
 
 
-<li><a href="{{route('login')}}"class="hover:underline">Login</a></li>
-
+@guest
 <li><a href="{{route('register')}}"class="hover:underline">Register</a></li>
+<a href="{{ route('login') }}"><button class="px-4 py-2 rounded-md text-white bg-pink-500 hover:bg-pink-600">Login</button></a>
+@endguest
 
+@auth
+<li><a href="" class="hover:underline">{{auth()->user()->name}}</a></li>
+
+<form action="{{route('logout')}}" method="POST">
+
+@csrf
+<button type="submit" class="px-4 py-2 rounded-md text-white bg-pink-500 hover:bg-pink-600">Logout</button>
+</form>
+
+
+
+@endauth
 
 
 
@@ -61,7 +74,7 @@
 
 <!-- Footer -->
 <footer class="bg-pink-600 text-white text-center py-4">
-<p>&copy; 2024 Cosmetic Store. All rights reserved.</p>
+<p>&copy; 2024 Grocery Store. All rights reserved.</p>
 </footer>
 
 
