@@ -241,9 +241,23 @@ public function checkout()
 
 }
 
+            public function productlistAjax(){
+
+             $products = Product::select('product_name')->where('status','0')->get();
+              $data=[];
+
+            foreach($products as $product){
+
+              $data[] = $product['product_name'];
+
+               }
+
+                 return $data;
+
 
 
     }
+}
 
 
 

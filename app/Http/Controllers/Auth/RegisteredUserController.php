@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -31,27 +32,26 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' =>['required','confirmed', Rules\Password::defaults()],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'phone' => ['required', 'digits:10','unique:users'],  // Ensures phone has exactly 10 digits
+            'address' => ['required', 'string', 'max:255'],
+        ]);
 
- ]);
-
-         $user = User::create([
-            'name' =>$request->name,
-            'email' =>$request->email,
-            'password'=> Hash::make($request->password),
-            'phone'=>$request->phone,
-             'address' =>$request->address,
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'phone' => $request->phone,
+            'address' => $request->address,
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
+        return redirect('/');
 
-        return redirect(RouteServiceProvider::HOME);
+        // return redirect(RouteServiceProvider::HOME);
     }
+
 }
-
-
-
-

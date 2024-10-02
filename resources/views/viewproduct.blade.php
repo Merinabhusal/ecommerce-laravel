@@ -14,7 +14,7 @@
         @csrf
         <input type="number" value="1" min="1"class="form-control" style= "width:100px" name="quantity">
         <br>
-        <input class="btn btn-primary"type="submit" value="Add to Shopping list">
+        <input class="bg-red-500 text-white px-2 py-2"type="submit" value="Add to Shopping list">
 
         </form>
 

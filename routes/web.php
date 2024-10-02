@@ -60,17 +60,7 @@ Route::post('/user/store',[PagesController::class,'userstore'])->name('user.stor
 Route::get('/dashboard', [DashboardController::class,'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 
-
-
-
-
 Route::middleware('auth')->group(function () {
-
-
-
-
-
-
 
 // Frontend
  Route::get('/products',[PagesController::class,'index'])->name('products');
@@ -78,6 +68,7 @@ Route::middleware('auth')->group(function () {
  Route::get('/contacts',[PagesController::class,'contact'])->name('contacts');
 Route::post('/addcart/{id}', [PagesController::class, 'addcart'])->name('addcart');
 Route::get('/cart/view', [PagesController::class,'viewcart'])->name('viewcart');
+// Route::get('product-list', [PagesController::class, 'productlistAjax']);
 
 
 
@@ -97,7 +88,7 @@ Route::get('/checkout', [PagesController::class, 'checkout'])->name('checkout');
 //ProductsController
  Route::get('/product',[ProductController::class,'index'])->name('products.index');
  Route::get('/product/create', [ProductController::class,'create'])->name('products.create');
- Route::post('/product/store',[ProductController::class,'store'])->name('products.store');
+ Route::get('/product/store',[ProductController::class,'store'])->name('products.store');
  Route::get('/product/{id}/edit', [ProductController::class,'edit'])->name('products.edit');
  Route::post('/product/{id}/update', [ProductController::class,'update'])->name('products.update');
  Route::post('/product/destroy', [ProductController::class,'destroy'])->name('products.destroy');

@@ -31,9 +31,51 @@ Dashboard
     </div>
 
     <div class="bg-pink-600 text-white rounded-lg flex justify-between py-4 px-2">
+        <h1 class="text-xl">Total visits</h1>
+        <h1 class="text-4xl font-bold"> {{$totalvisits}}</h1>
+    </div>
+
+    <div class="bg-pink-600 text-white rounded-lg flex justify-between py-4 px-2">
         <h1 class="text-xl">Total Carts</h1>
         <h1 class="text-4xl font-bold">{{$totalcarts}}</h1>
     </div>
+
 </div>
+
+<div>
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels:{!! $visitdate !!} ,
+        datasets: [{
+          label: 'No.of Visits',
+          data: {!! $visits !!},
+          borderWidth: 1,
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+
+
+
+
+
+
+
 
 @endsection

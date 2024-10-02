@@ -51,35 +51,38 @@ class ProductController extends Controller
     //     return redirect(route('products.index'))->with('success', 'Product Created Successfully');
     // }
 
-
-
-
-
-    public function store(Request $request) {
-
-        $data = $request->validate([
-            'priority'=>'required',
-            'product_name'=>'required',
-            'photopath' => 'required',
-            'description'=>'required',
-            'price'=>'required',
-            'category_id'=>'required',
+    public function store(Request $request)
+    {
+        // Validation rules
+        $validatedData = $request->validate([
+            'priority' => 'required|integer|min:1|unique:products,priority', // Priority must be unique, required, and >= 1
+            'product_name' => 'required|string|max:255',                     // Product name is required, must be a string
+            'photopath' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Ensure the file is an image with valid MIME types
+            'description' => 'required|string|max:500',                      // Description is required
+            'category_id' => 'required|integer|exists:categories,id',         // Category ID must exist in the categories table
+            'price' => 'required|numeric|min:0',                             // Price must be numeric and >= 0
         ]);
 
-           if($request->hasFile('photopath'))
-        {
-            $file = $request->photopath;
-            //get file name with extension
-            $filename = $file->getClientOriginalName();
-            $filename = time().'_'.$filename;
-            //store file in public
-            $file->move('images/products',$filename);
-            $data['photopath'] = $filename;
+        // Process and store the product data
+        $product = new Product();
+        $product->priority = $request->priority;
+        $product->product_name = $request->product_name;
+        $product->description = $request->description;
+        $product->category_id = $request->category_id;
+        $product->price = $request->price;
+
+        // Handle file upload
+        if ($request->hasFile('photopath')) {
+            $file = $request->file('photopath'); // Get the uploaded file
+            $filename = time() . '_' . $file->getClientOriginalName(); // Create a unique filename
+            $file->move(public_path('images/product'), $filename); // Store file in public/images/products
+            $product->photopath = $filename; // Save the filename in the product instance
         }
 
-      Product::create($data);
-        return redirect(route('products.index'))->with('success',' Products Created Successfully');
+        // Save the product instance to the database
+        $product->save(); // Use save() instead of create() since you're already creating an instance
 
+        return redirect(route('products.index'))->with('success', 'Product created successfully.');
     }
 
      public function edit($id){
